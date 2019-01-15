@@ -1,0 +1,6 @@
+ghostscript
+imagemagick
+imagemagick@6
+mysql
+opencv
+tesseract

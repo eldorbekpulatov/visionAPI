@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% block content %}
+<script>$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+{% endblock %}

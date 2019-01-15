@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% block content %}
+
+  <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4" style="padding-bottom: 1.5rem;">add new profile..</h1>
+
+        <form action='' id='addProfileForm' method="POST" enctype="multipart/form-data"> 
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="inputName" class="col-3 col-form-label">architect name : </label>
+                <div class="col-9">
+                    <input class="form-control" type="text" placeholder="name.." id="inputName" required />
+                </div>  
+            </div>
+
+            <div class="form-group row">
+                <label for="inputPath" class="col-3 col-form-label">path : </label>
+                <div class="col-9">
+                    <input class="form-control" type="text" placeholder="path to samples.." id="inputPath" required />
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="inputSamples" class="col-3 col-form-label">samples : </label>
+                <div class="col-9" id="sampleFields">
+                    <div class="form-row align-items-center removeClass1" >
+                        <div class="col-auto">
+                            <label class="sr-only" for="inputID">id</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">id</div>
+                                </div>
+                                <input type="number" step=1 class="form-control" id="inputID" placeholder="sample id.." required />
+                            </div>   
+                        </div>
+                    
+                        <div class="col-auto">
+                            <label class="sr-only" for="inputPage">page</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">page</div>
+                                </div>
+                                <input type="number" step=1 class="form-control" id="inputPage" placeholder="page number.." required />
+                            </div>   
+                        </div>
+
+                        <div class="col-auto">
+                            <button class="btn btn-primary mb-2" id="1" onclick="addSampleField()">add more...</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="keyPhrases" class="col-3 col-form-label">key phrases : </label>
+                <div class="col-9">
+                    <ul id="keyPhrases">
+                    </ul>  
+                </div>
+            </div>
+
+            <input class="btn btn-success" type="submit" id="add-button">
+        </form>
+        <!-- a snackbar -->
+        <div id="snackbar">...</div>
+      </div>
+  </div>
+
+  <link rel="stylesheet" href="{% static 'css/snackbar.css' %}" type="text/css">
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+  <link href="{% static 'css/jquery.tagit.css' %}" rel="stylesheet" type="text/css">
+  <script src="{% static 'js/tag-it.min.js' %}" type="text/javascript" charset="utf-8"></script>
+  <script src="{% static 'js/addProfile.js' %}" type="text/javascript" charset="utf-8"></script>
+  <script src="{% static 'js/ajax.js' %}" type="text/javascript" charset="utf-8"></script>
+  {% endblock%}
