@@ -19,6 +19,7 @@ from . import views
 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
-    re_path(r'^', views.faceExtract, name='faceExtract'),
-    re_path(r'^', views.faceLandmark, name='faceLandmark'),
+    re_path(r'^', views.faceExtract, name='main'),
+    re_path(r'^faceExtract', views.faceExtract, name='faceExtract'),
+    re_path(r'^faceLandmark', views.faceLandmark, name='faceLandmark'),
 ]

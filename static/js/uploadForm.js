@@ -20,11 +20,11 @@ $(document).ready(function () {
             // If you want to add an extra field for the FormData
             data.append("api_choice", choice);
             // console.log(data)
-    
+            
             $.ajax({
                 type: "POST",
                 enctype: 'multipart/form-data',
-                url: "{% url 'faceExtract' %}",
+                url: window.location.pathname,
                 data: data,
                 processData: false,
                 contentType: false,

@@ -12,10 +12,11 @@ def faceExtract(request):
         else:
             file_name=None
     
-        # here we call the api    
-        if request.POST['api_choice'] == 'azure':
+        # here we call the api
+        api_result = json.dumps(d)
+        if request.POST['api_choice'] == 'coordinatesOnly':
             api_result=json.dumps(d)
-        elif request.POST['api_choice'] == 'google':
+        elif request.POST['api_choice'] == 'markedImageToo':
             api_result=json.dumps(d)
         
         return HttpResponse(api_result, content_type='application/json')
@@ -32,10 +33,11 @@ def faceLandmark(request):
         else:
             file_name=None
     
-        # here we call the api    
-        if request.POST['api_choice'] == 'azure':
+        # here we call the api
+        api_result = json.dumps(d)
+        if request.POST['api_choice'] == 'coordinatesOnly':
             api_result=json.dumps(d)
-        elif request.POST['api_choice'] == 'google':
+        elif request.POST['api_choice'] == 'markedImageToo':
             api_result=json.dumps(d)
         
         return HttpResponse(api_result, content_type='application/json')

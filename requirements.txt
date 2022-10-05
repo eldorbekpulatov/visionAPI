@@ -1,2 +1,7 @@
-Django
 gunicorn
+Django
+cmake
+dlib
+imutils
+numpy
+opencv-python
