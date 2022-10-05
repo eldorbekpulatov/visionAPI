@@ -25,7 +25,7 @@ SECRET_KEY = '2r1k@_ya_(3ov&fojf0cy$=f)=w#j!@n$qpq^n@p01^6b%pjq0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = ['vision-api-app.herokuapp.com']
 
 
 # Application definition
