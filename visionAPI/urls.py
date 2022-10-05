@@ -15,11 +15,20 @@ Including another URLconf
 """
 from django.urls import re_path
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
-    re_path(r'^', views.faceExtract, name='main'),
-    re_path(r'^faceExtract', views.faceExtract, name='faceExtract'),
-    re_path(r'^faceLandmark', views.faceLandmark, name='faceLandmark'),
+    re_path(r'^$', views.faceLandmark, name='main'),
+    re_path(r'^faceLandmark$', views.faceLandmark, name='faceLandmark'),
+    re_path(r'^faceExtract$', views.faceExtract, name='faceExtract'),
+    
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

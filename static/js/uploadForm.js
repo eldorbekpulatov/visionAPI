@@ -19,7 +19,6 @@ $(document).ready(function () {
 
             // If you want to add an extra field for the FormData
             data.append("api_choice", choice);
-            // console.log(data)
             
             $.ajax({
                 type: "POST",
@@ -30,9 +29,16 @@ $(document).ready(function () {
                 contentType: false,
                 cache: false,
                 timeout: 600000,
-                success: function (data) {           
-                    console.log("SUCCESS : ", data);
-                    document.getElementById('response').innerHTML=JSON.stringify(data);
+                success: function (data) {   
+                    console.log("SUCCESS" );
+                    $('#outputImage').remove();
+
+                    if (typeof(data) == "object"){
+                        $('#responseLocation').html('<code style="max-width:90%; max-height:60%;">'+JSON.stringify(data)+'</code>');
+                    }else{
+                        $('#responseLocation').html('<img id="outputImage" src="' + data + "?"+ new Date().getTime()+'" />');
+                    }
+
                 },
                 error: function (e) {        
                     console.log("ERROR : ", e);  

@@ -18,7 +18,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
-    
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <title>visionAPI</title>
   </head>
 
@@ -32,7 +32,7 @@
             <a class="nav-link" href="{% url 'faceLandmark' %}">@faceLandmark</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'faceExtract' %}">@faceExtract</a>
+            <a class="nav-link disabled" href="{% url 'faceExtract' %}">@faceExtract</a>
           </li>
         </ul>
       </nav>
