@@ -1,9 +1,22 @@
 # import the necessary packages
 from collections import OrderedDict
+import face_alignment
 import numpy as np
 import imutils
 import dlib
+import json
 import cv2
+
+
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NpEncoder, self).default(obj)
 
 # define a dictionary that maps the indexes of the facial
 # landmarks to specific face regions
@@ -16,6 +29,32 @@ FACIAL_LANDMARKS_IDXS = OrderedDict([
     ("nose", (27, 35)),
     ("jaw", (0, 17))
 ])
+
+
+def convertVectorToDict(shape):
+    remap = {}
+    for part_name, (i,j) in FACIAL_LANDMARKS_IDXS.items():
+        remap[part_name] = [tuple(p) for p in shape[i:j]]
+    return remap
+
+
+def getCoordinatesFor3DFaces(img_path):
+    image = cv2.imread(img_path)
+    fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._3D, flip_input=False, device='cpu')
+    return fa.get_landmarks(image)
+
+
+def shape_to_np(shape, dtype="int"):
+    # initialize the list of (x, y)-coordinates
+    coords = np.zeros((68, 2), dtype=dtype)
+
+    # loop over the 68 facial landmarks and convert them
+    # to a 2-tuple of (x, y)-coordinates
+    for i in range(0, 68):
+        coords[i] = (shape.part(i).x, shape.part(i).y)
+
+    # return the list of (x, y)-coordinates
+    return coords
 
 def visualize_facial_landmarks(image, shape, colors=None, alpha=0.75):
     # create two copies of the input image -- one for the
@@ -61,20 +100,8 @@ def visualize_facial_landmarks(image, shape, colors=None, alpha=0.75):
     # return the output image
     return output
         
-def shape_to_np(shape, dtype="int"):
-    # initialize the list of (x, y)-coordinates
-    coords = np.zeros((68, 2), dtype=dtype)
 
-    # loop over the 68 facial landmarks and convert them
-    # to a 2-tuple of (x, y)-coordinates
-    for i in range(0, 68):
-        coords[i] = (shape.part(i).x, shape.part(i).y)
-
-    # return the list of (x, y)-coordinates
-    return coords
-
-
-def getCoordinatesForFaces(img_path):
+def getCoordinatesFor2DFaces(img_path):
     data_path = "./data/shape_predictor_68_face_landmarks.dat"
     # initialize dlib's face detector (HOG-based) and then create
     # the facial landmark predictor
@@ -102,8 +129,5 @@ def getCoordinatesForFaces(img_path):
     # return the image and the detected faces
     return image, faces
 
-def convertVectorToDict(shape):
-    remap = {}
-    for part_name, (i,j) in FACIAL_LANDMARKS_IDXS.items():
-        remap[part_name] = [(p[0],p[1]) for p in shape[i:j]]
-    return remap
+
+

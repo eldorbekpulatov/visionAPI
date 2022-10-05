@@ -4,16 +4,6 @@ from .forms import UploadFileForm
 from .markup import *
 import json
 
-class NpEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, np.integer):
-            return int(obj)
-        if isinstance(obj, np.floating):
-            return float(obj)
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-        return super(NpEncoder, self).default(obj)
-
 def faceExtract(request):
     if request.method=="POST":
         if 'file_name' in request.POST:  
@@ -21,13 +11,11 @@ def faceExtract(request):
         else:
             return render(request, '404.html')
     
-        # here we call the api
-        image, faces = getCoordinatesForFaces(file_name)
-        if request.POST['api_choice'] == 'coordinatesOnly':
-            return HttpResponse(faces, content_type='application/json')
-        elif request.POST['api_choice'] == 'markedImageToo':
-            return HttpResponse(faces, content_type='application/json')
-        
+        result = {}
+        faces = getCoordinatesFor3DFaces(file_name)
+        for i,face in enumerate(faces):
+            result[i] = convertVectorToDict(face)
+        return HttpResponse(json.dumps(result, cls=NpEncoder), content_type='application/json')
     else:
         return render(request, 'faceExtract.html', {'form': UploadFileForm()})
 
@@ -40,7 +28,7 @@ def faceLandmark(request):
             return render(request, '404.html')
     
         # here we call the api
-        image, faces = getCoordinatesForFaces(file_name)
+        image, faces = getCoordinatesFor2DFaces(file_name)
         if request.POST['api_choice'] == 'coordinatesOnly':
             for k,v in faces.items(): 
                 faces[k] = convertVectorToDict(v)

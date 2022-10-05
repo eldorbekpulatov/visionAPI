@@ -7,3 +7,4 @@ imutils==0.5.4
 numpy==1.23.3
 opencv-python-headless==4.6.0.66
 sqlparse==0.4.3
+torch==1.12.1
